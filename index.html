@@ -83,58 +83,83 @@
                 <div class="cards">
                     <h2>Browse all</h2>
                     <div class="cards-container">
+                      <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card1img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card2img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card3img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class=""> 
                         <div class="card">
                             <img src="./spotifyimg.html/card4img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class=""> 
                         <div class="card">
                             <img src="./spotifyimg.html/card5img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
                     </div><br>
                     <div class="cards-container">
+                      <a href="${url}" download class=""> 
                         <div class="card">
                             <img src="./spotifyimg.html/card1img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card2img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                      <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card3img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                      </a>
+                     <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card4img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                     </a>
+                     <a href="${url}" download class="">
                         <div class="card">
                             <img src="./spotifyimg.html/card5img.jpeg">
                             <p class="card-title">Top 50 - Global</p>
                             <p class="card-info">Your daily updates of the most played tracks</p>
                         </div>
+                     </a>
+                    </div>
+                    <!-- Video Downloads Section -->
+                    <div class="video-download-section">
+                        <h2>Download Videos</h2>
+                        <div id="video-list"></div>
                     </div><br><br><br><br><br>
                     <div class="main_content_footer">
                         <div class="main_footer">
@@ -163,7 +188,7 @@
                         </div>
                     </div><br><br>
                     <div class="horizontalline"><hr></div><br><br>
-                    <div class="copyright"><p>&COPY; 2024 Spotify AB</p></div>
+                    <div class="copyright"><p>&COPY; 2024 Spotify AB - Built by Peter</p></div>
                 </div>
             </div>
          <a href="https://www.google.com">
@@ -176,5 +201,35 @@
             </div>
          </a>
         </div>
+        <script>
+            const videoList = document.getElementById("video-list");
+          
+            fetch("https://api.pexels.com/videos/search?query=nature&per_page=5", {
+              headers: {
+                Authorization: "Q16uINgqefK7JtgqApC5rbMrIaznJ2qUqewolH4EKJlzazBCmOryKf49"
+              }
+            })
+            .then(res => res.json())
+            .then(data => {
+              data.videos.forEach(video => {
+                const url = video.video_files.find(file => file.quality === "sd" && file.file_type === "video/mp4").link;
+                const div = document.createElement("div");
+                div.innerHTML = `
+                  <h3>${video.user.name}</h3>
+                  <video controls>
+                    <source src="${url}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video><br>
+                  <a href="${url}" download class="download-btn">Download Video</a>
+                  <br>
+                `;
+                videoList.appendChild(div);
+              });
+            })
+            .catch(err => {
+              videoList.innerHTML = "<p>Failed to load videos.</p>";
+              console.error(err);
+            });
+          </script>          
     </body>
 </html>
